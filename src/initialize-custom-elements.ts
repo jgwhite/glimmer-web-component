@@ -16,11 +16,17 @@ function initializeCustomElement(app: Application, name: string): void {
       value: function connectedCallback() {
         let placeholder = document.createTextNode('');
         let parent = this.parentNode;
+        let attributes = {};
+
+        for (let i = 0; i < this.attributes.length; i++) {
+          let attribute = this.attributes[i];
+          attributes[attribute.name] = attribute.value;
+        }
 
         parent.insertBefore(placeholder, this);
         parent.removeChild(this);
 
-        app.renderComponent(name, parent, placeholder);
+        app.renderComponent(name, parent, placeholder, attributes);
       }
     }
   });
